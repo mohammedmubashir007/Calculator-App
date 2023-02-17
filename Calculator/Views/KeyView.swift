@@ -12,6 +12,7 @@ struct KeyView: View {
     @State var value = "0"
     @State var runningNumber = 0
     @State var currentOperation:Operation = .none
+    @State private var changeColor = true
     
     let buttons : [[Keys]] = [
         
@@ -24,7 +25,23 @@ struct KeyView: View {
     ]
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack{
+            Spacer()
+            HStack {
+                RoundedRectangle(cornerRadius: 15).foregroundColor(changeColor ? Color("NumKeys").opacity(0.4) : Color.pink.opacity(0.2))
+                    .scaleEffect(changeColor ? 1.5 : 1.0)
+                    .frame(width: 350,height: 280)
+                    .animation(Animation.easeInOut.speed(0.17).repeatForever(),value: changeColor)
+                    .onAppear(perform: {
+                        self.changeColor.toggle()
+                    })
+                    .overlay(Text(value))
+                    .bold()
+                    .font(.system(size: 100))
+                .foregroundColor(.black)
+            }.padding()
+            Text("Mohammed Muabshir")
+        }
     }
 }
 
