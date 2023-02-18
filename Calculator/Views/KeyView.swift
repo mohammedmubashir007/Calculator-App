@@ -38,13 +38,59 @@ struct KeyView: View {
                     .overlay(Text(value))
                     .bold()
                     .font(.system(size: 100))
-                .foregroundColor(.black)
+                    .foregroundColor(.black)
             }.padding()
-            Text("Mohammed Muabshir")
+            
+            ForEach(buttons,id: \.self){ row in
+                
+                HStack(spacing: 10) {
+                    ForEach(row, id: \.self){ element in
+                        
+                        Button {
+                            self.didTap(button: element)
+                        } label: {
+                            Text(element.rawValue)
+                                .font(.system(size: 30))
+                                .frame(width:getWidth(element: element),height: getHeight(element: element))
+                                .background(element.buttonColor)
+                                .foregroundColor(.black)
+                                .cornerRadius(getWidth(element: element)/2)
+                                .shadow(color: .purple.opacity(0.8), radius:30)
+                                
+                        }
+                    }
+                }.padding(.bottom,4)
+                
+            }
         }
+        
     }
-}
+    
+    
+    
+    func getWidth(element:Keys) -> CGFloat {
+        
+        if element == .zero {
+            return (UIScreen.main.bounds.width - (5*10)) / 2
+        }
 
+        return (UIScreen.main.bounds.width - (5*10)) / 4
+    }
+    
+    
+    
+    func getHeight(element:Keys) -> CGFloat {
+        return (UIScreen.main.bounds.width - (5*10)) / 5
+    }
+    
+    
+    func didTap(button:Keys){
+        print("Mubashir")
+    }
+    
+    
+    
+}
 struct KeyView_Previews: PreviewProvider {
     static var previews: some View {
         KeyView()
