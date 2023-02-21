@@ -56,7 +56,7 @@ struct KeyView: View {
                                 .foregroundColor(.black)
                                 .cornerRadius(getWidth(element: element)/2)
                                 .shadow(color: .purple.opacity(0.8), radius:30)
-                                
+                            
                         }
                     }
                 }.padding(.bottom,4)
@@ -73,7 +73,7 @@ struct KeyView: View {
         if element == .zero {
             return (UIScreen.main.bounds.width - (5*10)) / 2
         }
-
+        
         return (UIScreen.main.bounds.width - (5*10)) / 4
     }
     
@@ -85,10 +85,61 @@ struct KeyView: View {
     
     
     func didTap(button:Keys){
-        print("Mubashir")
+        
+        switch button{
+        case .add, .subtract, .multiply, .divide, .equal:
+            if button == .add{
+                currentOperation = .add
+                runningNumber = Int(self.value) ?? 0
+                
+            }
+            else if button == .subtract{
+                currentOperation = .substract
+                runningNumber = Int(self.value) ?? 0
+                
+            }
+            else if button == .multiply{
+                currentOperation = .multiply
+                runningNumber = Int(self.value) ?? 0
+                
+            }
+            else if button == .divide{
+                currentOperation = .divide
+                runningNumber = Int(self.value) ?? 0
+                
+            }
+            else if button == .equal{
+                let runningValue = self.runningNumber
+                let currentValue = Int(self.value) ?? 0
+                
+                switch self.currentOperation {
+                case .add: self.value = "\(runningValue + currentValue)"
+                case .substract: self.value = "\(runningValue - currentValue)"
+                case .multiply: self.value = "\(runningValue * currentValue)"
+                case .divide: self.value = "\(runningValue / currentValue)"
+                case .none: break
+                }
+                
+            }
+            
+            if button != .equal {
+                self.value = button.rawValue
+            }
+            
+        case .clear: self.value = "0"
+        case .decimal, .negative, .percent:break
+            
+        default:
+            let number = button.rawValue
+            if value == "0" {
+                value = number
+            }
+            else {
+                self.value = "\(self.value)\(number)"
+            }
+        }
+        
     }
-    
-    
     
 }
 struct KeyView_Previews: PreviewProvider {
